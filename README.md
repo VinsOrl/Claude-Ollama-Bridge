@@ -43,7 +43,7 @@ Run this command in your Bash or Zsh terminal:
 ```bash
 curl -fsSL https://raw.githubusercontent.com/VinsOrl/Claude-Ollama-Bridge/refs/heads/master/install.sh | bash
 ```
-https://raw.githubusercontent.com/VinsOrl/Claude-Ollama-Bridge/refs/heads/master/install.sh
+
 ### Windows PowerShell
 
 Run this command in your PowerShell terminal:
