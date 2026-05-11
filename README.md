@@ -49,7 +49,7 @@ curl -fsSL https://raw.githubusercontent.com/<YourUsername>/<YourRepo>/main/inst
 Run this command in your PowerShell terminal:
 
 ```powershell
-irm https://raw.githubusercontent.com/<YourUsername>/<YourRepo>/main/install.ps1 | iex
+irm https://raw.githubusercontent.com/VinsOrl/Claude-Ollama-Bridge/refs/heads/master/install.ps1 | iex
 ```
 
 > **Note:** If Windows blocks the script, run this first:
