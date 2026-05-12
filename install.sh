@@ -24,12 +24,11 @@ if [ ! -f "$PROFILE" ]; then
 fi
 
 # 3. Define the function payload exactly as it will appear in the profile
-# The 'EOF' in single quotes ensures variables are NOT expanded during install
 PAYLOAD=$(cat << 'EOF'
 
 # --- claude-ollama start ---
 claude-ollama() {
-  # Fetch models and strip Windows carriage returns (just in case they run this in WSL)
+  # Fetch models and strip Windows carriage returns
   local models=($(ollama list | awk 'NR>1 {print $1}' | tr -d '\r'))
 
   if [ ${#models[@]} -eq 0 ]; then
@@ -51,7 +50,8 @@ claude-ollama() {
   echo -e "\n\033[0;36m--- Session Options ---\033[0m"
   echo "1) Start a New Session"
   echo "2) Resume an Existing Session"
-  read -p "Select an option (1 or 2): " session_choice
+  printf "Select an option (1 or 2): "
+  read session_choice
 
   export ANTHROPIC_BASE_URL="http://localhost:11434"
   export ANTHROPIC_API_KEY="ollama"
@@ -60,7 +60,8 @@ claude-ollama() {
     echo -e "\033[0;32mStarting new session with $model...\033[0m"
     claude --model "$model"
   elif [ "$session_choice" = "2" ]; then
-    read -p "Enter Session ID (Leave blank for latest): " session_id
+    printf "Enter Session ID (Leave blank for latest): "
+    read session_id
     if [ -z "$session_id" ]; then
       echo -e "\033[0;32mResuming latest session with $model...\033[0m"
       claude --model "$model" --continue
@@ -79,7 +80,6 @@ EOF
 # 4. Auto-Update Logic
 if grep -q "# --- claude-ollama start ---" "$PROFILE"; then
     echo -e "${YELLOW}Old version detected. Updating to new version...${NC}"
-    # Use sed to delete the old block. .bak ensures macOS/BSD compatibility.
     sed -i.bak '/# --- claude-ollama start ---/,/# --- claude-ollama end ---/d' "$PROFILE"
     rm -f "${PROFILE}.bak"
 else
